@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const thoughtSchema = new Schema({
-    date: { type: String, required: true },
+const thoughtSchema = new mongoose.Schema({
     day: { type: String, required: true },
+    date: { type: String, required: true },
     text: { type: String, required: true }
 });
 

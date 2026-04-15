@@ -1,264 +1,246 @@
 /* --- 1. MODERN DESIGN VARIABLES --- */
 :root {
-    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4ecf7 100%);
-    --text-main: #2d3748;
-    --text-muted: #718096;
-    --primary-color: #5a67d8;
-    --primary-hover: #4c51bf;
+    --primary-color: #6366f1;
+    --primary-hover: #4f46e5;
+    --bg-color: #f8fafc;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --white: #ffffff;
 
-    /* Box & Glassmorphism */
-    --box-bg: rgba(255, 255, 255, 0.7);
-    --box-border: rgba(255, 255, 255, 0.4);
-    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-    --box-hover-shadow: 0 10px 20px rgba(90, 103, 216, 0.15);
-
-    /* Completed State (Green) */
-    --read-bg: linear-gradient(135deg, #dcfce7 0%, #bbf7d0 100%);
+    /* Progress Colors */
+    --read-bg: #dcfce7;
     --read-text: #166534;
     --read-border: #86efac;
 
-    /* Modal & Alerts */
-    --modal-overlay: rgba(15, 23, 42, 0.6);
-    --modal-bg: #ffffff;
-    --error-bg: #fef2f2;
+    /* Admin Colors */
+    --error-bg: #fee2e2;
     --error-text: #991b1b;
     --success-bg: #ecfdf5;
     --success-text: #065f46;
+    --delete-red: #ef4444;
+    --edit-blue: #3b82f6;
 }
 
 /* --- 2. GLOBAL RESET --- */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg-gradient);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-color);
     color: var(--text-main);
-    margin: 0;
-    padding: 2rem 1rem;
+    line-height: 1.5;
+    padding: 40px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
 }
 
-/* --- 3. HEADER & ADMIN LINKS --- */
+/* --- 3. HEADER --- */
 header {
     text-align: center;
-    margin-bottom: 3rem;
-    animation: fadeInDown 0.8s ease-out;
+    margin-bottom: 40px;
 }
 
 h1 {
-    margin: 0 0 0.5rem 0;
+    font-size: 2.5rem;
     font-weight: 800;
-    font-size: 2.8rem;
-    letter-spacing: -1px;
-    background: linear-gradient(to right, #4c51bf, #6b46c1);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary-color);
+    margin-bottom: 10px;
 }
 
 .admin-link {
     display: inline-block;
-    margin-top: 10px;
-    padding: 0.6rem 1.2rem;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--primary-color);
     text-decoration: none;
-    border: 2px solid var(--primary-color);
-    border-radius: 30px;
+    background: var(--primary-color);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
     transition: 0.3s;
 }
 
 .admin-link:hover {
-    background: var(--primary-color);
-    color: white;
+    background: var(--primary-hover);
+    transform: translateY(-2px);
 }
 
-/* --- 4. THE GRID --- */
+/* --- 4. THE THOUGHTS GRID --- */
 .grid-container {
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    gap: 14px;
+    /* 10 boxes per row */
+    gap: 12px;
     max-width: 1000px;
     width: 100%;
-    animation: fadeIn 1s ease-out 0.2s both;
 }
 
 .day-box {
-    background: var(--box-bg);
-    border: 1px solid var(--box-border);
-    border-radius: 12px;
-    padding: 1.2rem 0;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    box-shadow: var(--box-shadow);
-    backdrop-filter: blur(10px);
-    font-weight: 600;
-    font-size: 0.9rem;
+    aspect-ratio: 1 / 1;
+    background: var(--white);
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
     color: var(--primary-color);
-    user-select: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .day-box:hover {
-    transform: translateY(-5px) scale(1.03);
-    background-color: #fff;
-    box-shadow: var(--box-hover-shadow);
+    transform: scale(1.05);
+    border-color: var(--primary-color);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-/* --- 5. PROGRESS TRACKING (READ STATE) --- */
+/* Progress Tracking - Read State */
 .day-box.read {
-    background: var(--read-bg);
+    background-color: var(--read-bg);
     color: var(--read-text);
     border-color: var(--read-border);
 }
 
-.day-box.read::after {
-    content: " ✓";
-    font-size: 0.7rem;
-    opacity: 0.6;
-}
-
-/* --- 6. MODAL STYLING --- */
+/* --- 5. MODAL POP-UP --- */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: var(--modal-overlay);
-    display: flex;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    /* Hidden by default */
     justify-content: center;
     align-items: center;
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.4s;
     z-index: 1000;
-    backdrop-filter: blur(8px);
 }
 
 .modal-overlay.active {
-    opacity: 1;
-    visibility: visible;
+    display: flex;
+    /* Shown when active class is added by JS */
 }
 
 .modal-content {
-    background-color: var(--modal-bg);
-    padding: 2.5rem;
+    background: var(--white);
+    padding: 30px;
     border-radius: 20px;
-    max-width: 500px;
     width: 90%;
+    max-width: 500px;
     text-align: center;
-    transform: scale(0.9) translateY(20px);
-    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: modalIn 0.3s ease-out;
 }
 
-.modal-overlay.active .modal-content {
-    transform: scale(1) translateY(0);
+@keyframes modalIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .modal-day {
     font-size: 0.8rem;
-    color: var(--primary-color);
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    color: var(--text-muted);
     font-weight: 700;
-    display: block;
-    margin-bottom: 1rem;
 }
 
 .modal-thought {
-    font-size: 1.4rem;
+    margin: 20px 0;
+    font-size: 1.25rem;
     line-height: 1.6;
-    font-style: italic;
-    font-family: 'Georgia', serif;
     color: var(--text-main);
 }
 
 .close-btn {
-    margin-top: 2rem;
-    background: #f7fafc;
-    border: 1px solid #e2e8f0;
-    padding: 0.7rem 1.5rem;
-    border-radius: 30px;
+    background: #f1f5f9;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
     cursor: pointer;
     font-weight: 600;
-    color: var(--text-muted);
+    margin-top: 20px;
 }
 
-/* --- 7. ADMIN ACTIONS (EDIT/DELETE) --- */
+/* --- 6. ADMIN ACTIONS (EDIT/DELETE) --- */
 .admin-actions {
     display: flex;
     gap: 10px;
-    margin-top: 2rem;
     justify-content: center;
-    align-items: center;
-    border-top: 1px solid #eee;
-    padding-top: 1.5rem;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #f1f5f9;
 }
 
 .admin-actions input {
-    padding: 8px;
+    padding: 5px;
     border: 1px solid #ddd;
-    border-radius: 8px;
-    width: 130px;
+    border-radius: 5px;
+    width: 100px;
     font-size: 0.8rem;
 }
 
 .edit-link,
 .delete-btn {
-    padding: 8px 16px;
+    padding: 8px 15px;
     border-radius: 8px;
     font-size: 0.8rem;
     font-weight: 700;
     text-decoration: none;
+    border: none;
     cursor: pointer;
-    transition: 0.2s;
 }
 
 .edit-link {
-    background: #e0e7ff;
-    color: #4338ca;
-    border: 1px solid #818cf8;
+    background: #e0f2fe;
+    color: #0369a1;
 }
 
 .delete-btn {
     background: #fee2e2;
-    color: #991b1b;
-    border: 1px solid #f87171;
+    color: #b91c1c;
 }
 
-/* --- 8. FORMS (NEW/EDIT PAGES) --- */
+/* --- 7. FORMS (NEW & EDIT PAGES) --- */
 .form-container {
-    background: white;
-    padding: 2.5rem;
+    background: var(--white);
+    padding: 40px;
     border-radius: 20px;
-    box-shadow: var(--box-shadow);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
     width: 100%;
     max-width: 500px;
-    margin-top: 1rem;
 }
 
 .form-group {
-    margin-bottom: 1.2rem;
+    margin-bottom: 20px;
 }
 
-.form-group label {
+label {
     display: block;
-    margin-bottom: 0.5rem;
     font-weight: 600;
+    margin-bottom: 8px;
     font-size: 0.9rem;
 }
 
-.form-group input,
-.form-group textarea {
+input,
+textarea {
     width: 100%;
-    padding: 0.8rem;
+    padding: 12px;
     border: 1px solid #e2e8f0;
     border-radius: 10px;
     font-family: inherit;
@@ -269,51 +251,46 @@ h1 {
     background: var(--primary-color);
     color: white;
     border: none;
-    padding: 1rem;
+    padding: 14px;
     border-radius: 10px;
     font-weight: 700;
     cursor: pointer;
+    transition: 0.2s;
 }
 
-/* --- 9. FLASH ALERTS --- */
+.submit-btn:hover {
+    background: var(--primary-hover);
+}
+
+/* --- 8. FLASH ALERTS --- */
 .alert {
-    padding: 1rem 1.5rem;
+    padding: 15px 20px;
     border-radius: 12px;
-    margin-bottom: 1.5rem;
-    width: 90%;
+    margin-bottom: 20px;
+    width: 100%;
     max-width: 500px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-weight: 600;
-    animation: fadeInDown 0.5s ease;
 }
 
 .alert-success {
     background: var(--success-bg);
     color: var(--success-text);
-    border: 1px solid #34d399;
 }
 
 .alert-error {
     background: var(--error-bg);
     color: var(--error-text);
-    border: 1px solid #f87171;
 }
 
 .close-alert {
     cursor: pointer;
-    font-size: 1.2rem;
+    font-weight: bold;
 }
 
-/* --- 10. RESPONSIVENESS --- */
-@media (max-width: 992px) {
-    .grid-container {
-        grid-template-columns: repeat(8, 1fr);
-    }
-}
-
-@media (max-width: 768px) {
+/* --- 9. RESPONSIVENESS --- */
+@media (max-width: 800px) {
     .grid-container {
         grid-template-columns: repeat(5, 1fr);
     }
@@ -323,27 +300,8 @@ h1 {
     .grid-container {
         grid-template-columns: repeat(4, 1fr);
     }
-}
 
-/* --- 11. ANIMATIONS --- */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-@keyframes fadeInDown {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
+    h1 {
+        font-size: 1.8rem;
     }
 }

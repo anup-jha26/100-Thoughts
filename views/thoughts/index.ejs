@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>100 Days of Thoughts</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
@@ -29,11 +28,10 @@
             <div class="modal-content">
                 <span class="modal-day" id="modalDayNumber"></span>
                 <p class="modal-thought" id="modalThoughtText"></p>
-
                 <div class="admin-actions">
                     <a id="editBtn" href="#" class="edit-link">Edit</a>
-                    <form id="deleteForm" method="POST" onsubmit="return confirm('Delete this thought?')">
-                        <input type="password" name="adminPassword" placeholder="Pass to Delete" required>
+                    <form id="deleteForm" method="POST" onsubmit="return confirm('Delete permanently?')">
+                        <input type="password" name="adminPassword" placeholder="Password" required>
                         <button class="delete-btn">Delete</button>
                     </form>
                 </div>

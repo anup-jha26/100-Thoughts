@@ -1,18 +1,33 @@
-const mongoose = require('mongoose');
-const initData = require('./data.js');
-const Thought = require('../models/thought.js');
+const mongoose = require("mongoose");
+const path = require("path");
+// This specifically looks for the .env file in the folder ABOVE this one
+require('dotenv').config({ path: path.join(__dirname, "../.env") });
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/100DaysDB";
+const { data } = require("./data.js");
+const Thought = require("../models/thought.js");
 
-mongoose.connect(MONGO_URL)
-    .then(() => console.log("Connected to MongoDB successfully."))
-    .catch((err) => console.log("MongoDB connection error:", err));
+const dbUrl = process.env.ATLASDB_URL;
 
-const initDB = async () => {
-    await Thought.deleteMany({});
-    await Thought.insertMany(initData.data);
-    console.log("Database was initialized with thoughts!");
-    mongoose.connection.close();
-};
+if (!dbUrl) {
+    console.error("ERROR: ATLASDB_URL is undefined. Check your .env file content and location!");
+    process.exit(1);
+}
 
-initDB();
+async function main() {
+    try {
+        await mongoose.connect(dbUrl);
+        console.log("Connected to Atlas for initialization...");
+
+        await Thought.deleteMany({});
+        console.log("Cleared existing thoughts...");
+
+        await Thought.insertMany(data);
+        console.log("SUCCESS: 100 thoughts have been uploaded to Atlas!");
+
+        mongoose.connection.close();
+    } catch (err) {
+        console.error("Database Error:", err);
+    }
+}
+
+main();

@@ -10,16 +10,17 @@ module.exports.renderNewForm = (req, res) => res.render('thoughts/new');
 
 module.exports.createThought = async (req, res) => {
     if (req.body.adminPassword !== ADMIN_PASS) {
-        req.flash("error", "Incorrect Password!");
+        req.flash("error", "Wrong Password!");
         return res.redirect('/new');
     }
     await new Thought(req.body.thought).save();
-    req.flash("success", "Thought added!");
+    req.flash("success", "Thought added to the journey!");
     res.redirect('/');
 };
 
 module.exports.renderEditForm = async (req, res) => {
     const thought = await Thought.findById(req.params.id);
+    if (!thought) return res.redirect('/');
     res.render("thoughts/edit", { thought });
 };
 
@@ -29,7 +30,7 @@ module.exports.updateThought = async (req, res) => {
         return res.redirect(`/${req.params.id}/edit`);
     }
     await Thought.findByIdAndUpdate(req.params.id, { ...req.body.thought });
-    req.flash("success", "Updated!");
+    req.flash("success", "Thought updated!");
     res.redirect("/");
 };
 
@@ -39,6 +40,6 @@ module.exports.deleteThought = async (req, res) => {
         return res.redirect("/");
     }
     await Thought.findByIdAndDelete(req.params.id);
-    req.flash("success", "Deleted!");
+    req.flash("success", "Thought deleted.");
     res.redirect("/");
 };

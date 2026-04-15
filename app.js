@@ -11,12 +11,12 @@ const flash = require('connect-flash');
 const thoughtsRoutes = require('./routes/thoughts');
 
 const app = express();
+const dbUrl = process.env.ATLASDB_URL;
 const PORT = process.env.PORT || 3000;
-const dbUrl = process.env.ATLASDB_URL || "mongodb://127.0.0.1:27017/100DaysDB";
 
 mongoose.connect(dbUrl)
-    .then(() => console.log("Database Connected"))
-    .catch((err) => console.log("DB Error:", err));
+    .then(() => console.log("Cloud Database Connected"))
+    .catch((err) => console.log("Database Error:", err));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +26,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
 app.use(session({
-    secret: process.env.SECRET || "mysupersecret",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: { httpOnly: true, maxAge: 7 * 24 * 60 * 60 * 1000 }
