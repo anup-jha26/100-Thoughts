@@ -4,41 +4,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>100 Days of Thoughts</title>
+    <title>A Thought for the Day - Academic Director</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <header class="hero-header">
+        <div class="header-school">Brahmavid The Global School</div>
+        <span class="header-year">YEAR- 2026</span>
+        <h1>A Thought for the Day</h1>
+        <span class="header-from">From</span>
+        <h2 class="header-director">Academic Director’s Desk</h2>
+
+        <a href="/new" class="btn-primary" style="margin-top: 25px;">+ Add New Insight</a>
+    </header>
+
     <%- include('../includes/flash') %>
-        <header>
-            <h1>100 Days of Thoughts</h1>
-            <a href="/new" class="admin-link">+ New</a>
-        </header>
 
         <main class="grid-container">
             <% for(let thought of allThoughts) { %>
                 <div class="day-box" data-id="<%= thought._id %>" data-day="<%= thought.day %>"
                     data-date="<%= thought.date %>" data-text="<%= thought.text %>">
-                    <%= thought.day %>
-                </div>
-                <% } %>
-        </main>
-
-        <div class="modal-overlay" id="modalOverlay">
-            <div class="modal-content">
-                <span class="modal-day" id="modalDayNumber"></span>
-                <p class="modal-thought" id="modalThoughtText"></p>
-                <div class="admin-actions">
-                    <a id="editBtn" href="#" class="edit-link">Edit</a>
-                    <form id="deleteForm" method="POST" onsubmit="return confirm('Delete permanently?')">
-                        <input type="password" name="adminPassword" placeholder="Password" required>
-                        <button class="delete-btn">Delete</button>
-                    </form>
-                </div>
-                <button class="close-btn" id="closeBtn">Close</button>
+                    <%= thought.day.replace('Day ', '') %>
             </div>
-        </div>
-        <script src="/js/script.js"></script>
-</body>
+        <% } %>
+    </main>
 
-</html>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <h2 id="modalDayNumber" style="color: var(--accent-purple); font-size: 1.5rem; letter-spacing: 2px; text-transform: uppercase;"></h2>
+            <p id="modalThoughtText" class="modal-thought"></p>
+            
+            <div class="admin-actions">
+                <a id="editBtn" href="#" class="btn-edit">Edit</a>
+                <form id="deleteForm" method="POST" style="display: flex; gap: 10px;">
+                    <input type="password" name="adminPassword" placeholder="Passcode" required>
+                    <button class="btn-delete">Delete</button>
+                </form>
+            </div>
+            <button class="btn-secondary" id="closeBtn" style="margin-top: 20px;">Close Window</button>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <p>Developed by "Anup Kumar Jha"</p>
+    </footer>
+    
+    <script src="/js/script.js"></script>
+    </body>
+    
+    </html>

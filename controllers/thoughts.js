@@ -1,5 +1,5 @@
 const Thought = require('../models/thought');
-const ADMIN_PASS = "Anup@@btgs";
+const ADMIN_PASS = process.env.ADMIN_PASSWORD;
 
 module.exports.index = async (req, res) => {
     const allThoughts = await Thought.find({}).collation({ locale: "en", numericOrdering: true }).sort({ day: 1 });
